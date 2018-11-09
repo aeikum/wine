@@ -1928,7 +1928,9 @@ static inline HRESULT make_xaudio2_factory(REFIID riid, void **ppv)
 
 HRESULT xaudio2_initialize(IXAudio2Impl *This, UINT32 flags, XAUDIO2_PROCESSOR proc)
 {
-    return FAudio_Initialize(This->faudio, flags, proc);
+    if(proc != XAUDIO2_ANY_PROCESSOR)
+        WARN("Processor affinity not implemented in FAudio\n");
+    return FAudio_Initialize(This->faudio, flags, FAUDIO_DEFAULT_PROCESSOR);
 }
 
 HRESULT WINAPI DllGetClassObject(REFCLSID rclsid, REFIID riid, void **ppv)
