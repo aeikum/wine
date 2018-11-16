@@ -1679,7 +1679,7 @@ static HRESULT WINAPI IXAudio2Impl_CreateSubmixVoice(IXAudio2 *iface,
 }
 
 /* called thread created by SDL, must not access Wine TEB */
-static void engine_cb(FAudioEngineCall proc, FAudio *faudio, float *stream, void *user)
+static void engine_cb(FAudioEngineCallEXT proc, FAudio *faudio, float *stream, void *user)
 {
     XA2VoiceImpl *This = user;
 
@@ -1757,7 +1757,7 @@ static HRESULT WINAPI IXAudio2Impl_CreateMasteringVoice(IXAudio2 *iface,
 
     This->mst.engine_thread = CreateThread(NULL, 0, &engine_thread, &This->mst, 0, NULL);
 
-    FAudio_SetEngineProcedure(This->faudio, &engine_cb, &This->mst);
+    FAudio_SetEngineProcedureEXT(This->faudio, &engine_cb, &This->mst);
 
     FAudio_CreateMasteringVoice(This->faudio, &This->mst.faudio_voice, inputChannels,
             inputSampleRate, flags, 0 /* TODO */, This->mst.effect_chain);

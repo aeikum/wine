@@ -88,7 +88,7 @@ typedef struct _XA2VoiceImpl {
     FAudioVoice *faudio_voice;
 
     struct {
-        FAudioEngineCall proc;
+        FAudioEngineCallEXT proc;
         FAudio *faudio;
         float *stream;
     } engine_params;
